@@ -5,9 +5,11 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "eslint ./pages ./client"
   },
   "dependencies": {
+    "firebase": "^8.0.1",
     "next": "10.0.0",
     "react": "17.0.1",
     "react-dom": "17.0.1"
@@ -15,7 +17,10 @@
   "devDependencies": {
     "@types/node": "^14.14.6",
     "@types/react": "^16.9.55",
+    "@typescript-eslint/eslint-plugin": "^2.34.0",
+    "@typescript-eslint/parser": "^2.34.0",
     "and": "^0.0.3",
+    "eslint-config-policygenius": "^0.4.0",
     "typescript": "^4.0.5"
   }
 }
