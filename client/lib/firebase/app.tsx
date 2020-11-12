@@ -1,5 +1,6 @@
 import React from 'react';
 import firebase from 'firebase/app';
+import { devSetup } from './functions';
 
 const config = {
   apiKey: process.env.NEXT_PUBLIC_GOOGLE_FIREBASE_API_KEY,
@@ -26,6 +27,10 @@ export const FirebaseProvider = ({ children }: ProviderProps) => {
 
     return firebase.initializeApp(config);
   }, []);
+
+  if (process.env.NODE_ENV === 'development') {
+    devSetup();
+  }
 
   return (
     <FirebaseContext.Provider value={app}>
