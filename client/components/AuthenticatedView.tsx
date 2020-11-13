@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import firebase from 'firebase';
 import { useFirebaseApp } from '../lib/firebase/app';
 import { signOut } from '../lib/firebase/auth';
-import { getUser, UserProfile } from '../lib/firebase/functions';
+import { getUser, UserProfile, updateUser } from '../lib/firebase/functions';
 import styles from '../../styles/Home.module.css';
 
 interface Props {
@@ -30,6 +30,21 @@ function AuthenticatedView({ user }: Props) {
     });
   }, []);
 
+  const update = () => {
+    if (profile) {
+      const currentSubscribed = profile.subscribed;
+
+      console.log('profile', profile);
+
+      return updateUser({
+        data: { id: profile.id, subscribed: !currentSubscribed },
+        app,
+      }).then((userProfile) => {
+        console.log('update', userProfile);
+      });
+    }
+  };
+
   const {
     displayName,
     photoURL,
@@ -49,6 +64,8 @@ function AuthenticatedView({ user }: Props) {
       {
         loading ? 'Loading profile...' : <pre>{ JSON.stringify(profile, null, 1) }</pre>
       }
+
+      <button onClick={update}>Update Subscribed</button>
 
       <button onClick={() => signOut(app)}>Sign Out</button>
     </main>

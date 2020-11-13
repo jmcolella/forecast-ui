@@ -18,12 +18,14 @@ interface GetUserParams {
 }
 
 export interface UserProfile {
+  id: string;
   email: string;
   name: string;
   location: {
     _latitude: number;
     _longitude: number;
   };
+  subscribed: boolean;
 }
 
 export const getUser = async ({ app }: GetUserParams): Promise<UserProfile | null> => {
@@ -34,6 +36,27 @@ export const getUser = async ({ app }: GetUserParams): Promise<UserProfile | nul
   }
 
   const user = await callableGetUser();
+
+  return user.data;
+};
+
+interface UpdateUserParams {
+  app: firebase.app.App | null;
+  data: {
+    id: string;
+    subscribed?: boolean;
+  };
+}
+export const updateUser = async ({ app, data }: UpdateUserParams): Promise<UserProfile | null> => {
+  const callableUpdateUser = app?.functions().httpsCallable('updateUser');
+
+  if (!callableUpdateUser) {
+    return null;
+  }
+
+  console.log('Data', data);
+
+  const user = await callableUpdateUser(data);
 
   return user.data;
 };
