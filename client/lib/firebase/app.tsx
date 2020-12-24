@@ -1,6 +1,6 @@
 import React from 'react';
 import firebase from 'firebase/app';
-import { devSetup } from './functions';
+import { devSetup } from './functions/util/devSetup';
 
 const config = {
   apiKey: process.env.NEXT_PUBLIC_GOOGLE_FIREBASE_API_KEY,
